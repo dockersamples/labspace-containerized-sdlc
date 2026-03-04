@@ -154,7 +154,7 @@ by updating the GitHub Actions publish workflow (`.github/workflows/publish.yml`
 
 ```yaml
 - name: Publish Labspace
-  uses: dockersamples/publish-labspace-action@v1
+  uses: dockersamples/publish-labspace-action@v2
   with:
     labspace_base_version: latest-sdlc   # <-- add this line
     target_repo: ${{ env.DOCKERHUB_REPO }}
@@ -170,7 +170,8 @@ by updating the GitHub Actions publish workflow (`.github/workflows/publish.yml`
 | Deployed apps | `http://app.dockerlabs.xyz` | routed via Traefik |
 | Traefik dashboard | `http://localhost:8080` | — |
 
-**CI/CD secrets automatically available in `moby/demo-app`:**
+**CI/CD secrets automatically available in `moby/demo-app` (unless `SKIP_CI_SECRET_SETUP` is set to 
+`true` on the `workspace` service):**
 
 | Secret | Value |
 |--------|-------|
@@ -180,6 +181,10 @@ by updating the GitHub Actions publish workflow (`.github/workflows/publish.yml`
 | `DOCKERHUB_USERNAME` | from user's Docker Desktop |
 | `DOCKERHUB_PASSWORD` | from user's Docker Desktop |
 | `KUBECONFIG` | pre-generated k3s config |
+
+**Note:** If the `SKIP_CI_SECRET_SETUP` environment variable is set on the `workspace` service, all
+CI secret setup will be skipped. Ideally, this is set in the lab's own `compose.override.yaml` file.
+This is helpful in labs in which the student is going to setup the CI secrets themselves.
 
 The labspace project files are automatically committed to `moby/demo-app` at startup. If the project
 contains `.gitea/workflows/`, those workflows will automatically run after the initial push.
@@ -359,7 +364,10 @@ graph TD
 1. **Stay focused** — Keep the labspace to 1–2 core takeaways. More content can always be a new
    labspace.
 
-2. **Make it fun** — Use an engaging story or sample application. Creative emojis are encouraged!
+2. **Make it fun** — Use an engaging story or sample application. Emojis are encouraged, but use
+   them with taste: a well-placed emoji adds color and personality; too many makes content feel
+   cluttered and hard to scan. Good uses include section headings, callouts, and key moments of
+   celebration or warning. Avoid sprinkling them into every sentence or bullet point.
 
 3. **Empower the student** — Use second-person ("you"), never first-person plural ("we", "us",
    "let's", "our"):
@@ -387,6 +395,40 @@ graph TD
 8. **Verify the environment first** — The first section should always include a simple command
    that confirms the environment is working correctly.
 
+9. **Use numbered steps for sequential exercises** — When students must perform a series of
+   actions, use a numbered list with each code block indented (4 spaces) so it is nested inside
+   its list item. This keeps the command visually tied to its step and makes progress easy to
+   track. Never use a wall of text followed by disconnected code blocks for sequential actions.
+
+   When a step creates or updates a file, include the filename and intent in the step text so
+   students have enough context to complete the action even without using the Save button:
+
+   - ✓ "Create a file named `compose.yaml` with the following contents:"
+   - ✓ "Update `compose.yaml` to have the following content:"
+   - ❌ "Create the file:" *(which file? what is it?)*
+
+   ````markdown
+   1. Create a file named `compose.yaml` with the following contents:
+
+       ```yaml save-as=compose.yaml
+       services:
+         app:
+           image: nginx
+       ```
+
+   2. Start it:
+
+       ```bash
+       docker compose up -d
+       ```
+
+   3. Check that it's running:
+
+       ```bash
+       docker ps
+       ```
+   ````
+
 ---
 
 ## Quality Checklist
@@ -403,6 +445,7 @@ Before finishing, verify:
 - [ ] For SDLC: the note about updating `.github/workflows/publish.yml` is communicated to the user
 - [ ] `project/` contains realistic starter files appropriate to the topic
 - [ ] No instruction or command references `project/` as a path prefix or tells the user to `cd project`
+- [ ] Every step that has users create or update a file clearly states the filename and intent (e.g. "Create a file named `compose.yaml` with the following contents:")
 
 ---
 

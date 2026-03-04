@@ -3,23 +3,41 @@ metadata:
   sourceRepo: github.com/dockersamples/labspace-containerized-sdlc
   contentVersion: abcd123 # Will be filled in during CI
 
-title: Labspace starter
-description: |
-  A basic template for creating a Labspace, including all of the boilerplate needed to write and publish a Labspace.
+title: "The Containerized SDLC: From Local Dev to Production"
+description: >
+  Build a real Node.js API, then containerize every stage of your software development lifecycle —
+  local development, integration testing, CI/CD, and Kubernetes deployment.
 
 sections:
-  - title: Introduction
-    contentPath: .labspace/01-introduction.md
-  - title: Main Content 1
-    contentPath: .labspace/02-main-content.md
-  - title: Conclusion
-    contentPath: .labspace/03-conclusion.md
+  - title: "Introduction: Meet the App"
+    contentPath: 01-introduction.md
+  - title: "Local Dev with Docker Compose"
+    contentPath: 02-local-development.md
+  - title: "Containerizing Your Dev Environment"
+    contentPath: 03-containerized-dev.md
+  - title: "Integration Testing with Testcontainers"
+    contentPath: 04-integration-tests.md
+  - title: "Continuous Integration with Gitea Actions"
+    contentPath: 05-continuous-integration.md
+  - title: "Deploying to Kubernetes"
+    contentPath: 06-deploy-to-kubernetes.md
+  - title: "The Containerized SDLC: A Recap"
+    contentPath: 07-wrap-up.md
 
-# Services are used to add default tabs in the Labspace interface.
-# The IDE will always be present as a service, but you can add additional services as needed.
-# Icon values come from https://fonts.google.com/icons/
 services:
   - id: app
+    title: TaskFlow App
     url: http://localhost:3000
-    title: App
-    icon: anchor
+    icon: task_alt
+  - id: adminer
+    title: Database (Adminer)
+    url: http://localhost:8081
+    icon: storage
+  - id: gitea
+    title: Gitea
+    url: http://git.dockerlabs.xyz
+    icon: account_tree
+  - id: deployed-app
+    title: Deployed App
+    url: http://app.dockerlabs.xyz
+    icon: rocket_launch
