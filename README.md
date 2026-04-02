@@ -1,6 +1,6 @@
-# Labspace - Containerized SDLC
+# Labspace - Containers Across the SDLC
 
-Build a real Node.js API, then containerize every stage of your software development lifecycle — local development, integration testing, CI/CD, and Kubernetes deployment.
+Build a real Node.js API, then containerize every stage of your software development lifecycle — local development, integration testing, CI/CD, and Kubernetes deployment. Experience the power that containers provide across the entire SDLC.
 
 ## Learning objectives
 
